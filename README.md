@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="PolymCP Logo" width="400"/>
+  <img src="logo.png" alt="PolymCP Logo" width="600"/>
 </p>
 
 [![GitHub stars](https://img.shields.io/github/stars/llm-use/polymcp?style=social)](https://github.com/JustVugg/polymcp/stargazers)
