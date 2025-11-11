@@ -20,7 +20,7 @@ setup(
     description="Universal MCP Agent & Toolkit for intelligent LLM tool orchestration",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/YOUR_USERNAME/polymcp",
+    url="https://github.com/llm-use/polymcp",
     packages=find_packages(exclude=["tests", "examples", "docs"]),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -67,8 +67,9 @@ setup(
     zip_safe=False,
     keywords="mcp agent llm ai openai anthropic claude fastapi tools",
     project_urls={
-        "Bug Reports": "https://github.com/YOUR_USERNAME/polymcp/issues",
-        "Source": "https://github.com/YOUR_USERNAME/polymcp",
-        "Documentation": "https://github.com/YOUR_USERNAME/polymcp#readme",
+        "Bug Reports": "https://github.com/llm-use/polymcp/issues",
+        "Source": "https://github.com/llm-use/polymcp",
+        "Documentation": "https://github.com/llm-use/polymcp#readme",
     },
+
 )
