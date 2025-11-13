@@ -212,6 +212,7 @@ MIT License
 
 - [PolyMCP on GitHub](https://github.com/llm-use/polymcp)
 - [Playwright MCP](https://github.com/microsoft/playwright-mcp)
+- [Blender MCP](https://github.com/llm-use/Blender-MCP-Server)
 
 ---
 
