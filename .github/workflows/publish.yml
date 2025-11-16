@@ -25,26 +25,51 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          pip install build twine wheel setuptools
+          pip install --upgrade build wheel setuptools twine pkginfo
 
       - name: Generate dynamic version
         run: |
           BUILD_NUMBER=$(date +%s)
-          echo "__version__ = \"0.0.0.dev${BUILD_NUMBER}\"" > polymcp/version.py
+          echo "__version__ = '0.0.0.dev${BUILD_NUMBER}'" > polymcp/version.py
+          echo "POLYMCP_VERSION=0.0.0.dev${BUILD_NUMBER}" >> $GITHUB_ENV
+          echo "Generated version: 0.0.0.dev${BUILD_NUMBER}"
           cat polymcp/version.py
 
       - name: Verify package structure
         run: |
+          echo "=== Repository structure ==="
+          ls -la
+          echo "=== polymcp/ directory ==="
+          ls -la polymcp/
+          echo "=== Check __init__.py exists ==="
           test -f polymcp/__init__.py && echo "__init__.py exists" || echo "__init__.py MISSING!"
-          test -f polymcp/version.py && echo "version.py OK" || echo "version.py MISSING!"
 
-      - name: Build package
+      - name: Test setup.py metadata
         run: |
+          echo "=== Testing setup.py can read metadata ==="
+          python setup.py --name
+          python setup.py --version
+          python setup.py --author
+          python setup.py --description
+
+      - name: Build package with debug
+        run: |
+          echo "=== Building package ==="
           python -m build --no-isolation
+          echo "=== Build complete, checking dist/ ==="
           ls -la dist/
 
-      - name: Check package metadata
+      - name: Verify wheel contents
         run: |
+          echo "=== Checking wheel metadata ==="
+          cd dist
+          python -m zipfile -l *.whl | grep -E "(METADATA|PKG-INFO|RECORD)"
+          unzip -p *.whl "*/METADATA" || echo "No METADATA found!"
+          cd ..
+
+      - name: Check package with twine
+        run: |
+          echo "=== Running twine check ==="
           twine check dist/*
 
       - name: Publish to PyPI
