@@ -1,0 +1,43 @@
+name: Publish Python Package (PolyMCP)
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Generate dynamic version
+        run: |
+          BUILD_NUMBER=$(date +%s)
+          echo "__version__ = \"0.0.0.dev${BUILD_NUMBER}\"" > polymcp/version.py
+          echo "Generated version: 0.0.0.dev${BUILD_NUMBER}"
+
+      - name: Build package
+        run: |
+          python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.10.0
+        with:
+          verify-metadata: true
