@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ===== Checkout repository =====
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ===== Set up Python =====
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,10 +30,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install --upgrade build wheel setuptools twine pkginfo
 
-      # ===== Installa dipendenze runtime necessarie per l'import =====
+      # ===== Installa dipendenze runtime richieste dagli import in __init__.py =====
       - name: Install runtime dependencies
         run: |
-          pip install fastapi pydantic requests
+          pip install fastapi pydantic requests docstring-parser
 
       # ===== Genera versione dinamica =====
       - name: Generate dynamic version
@@ -41,7 +43,6 @@ jobs:
           echo "POLYMCP_VERSION=0.0.0.dev${BUILD_NUMBER}" >> $GITHUB_ENV
           echo "Generated version:"
           cat polymcp/version.py
-          # Legge solo la versione senza problemi di import
           python -c "from polymcp.version import __version__; print('Version from version.py:', __version__)"
 
       # ===== Verifica struttura del pacchetto =====
