@@ -25,7 +25,7 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade build wheel setuptools twine pkginfo==1.10.0
+          pip install --upgrade build wheel setuptools pkginfo==1.10.0 twine==6.0.1
 
       - name: Verify package structure
         run: |
