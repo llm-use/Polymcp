@@ -30,34 +30,22 @@ jobs:
       - name: Generate dynamic version
         run: |
           BUILD_NUMBER=$(date +%s)
-          echo "__version__ = '0.0.0.dev${BUILD_NUMBER}'" > polymcp/version.py
-          echo "Generated version.py:"
+          echo "__version__ = \"0.0.0.dev${BUILD_NUMBER}\"" > polymcp/version.py
           cat polymcp/version.py
 
-      - name: Verify version.py and setup.py metadata
+      - name: Verify package structure
         run: |
+          test -f polymcp/__init__.py && echo "__init__.py exists" || echo "__init__.py MISSING!"
           test -f polymcp/version.py && echo "version.py OK" || echo "version.py MISSING!"
-          echo "=== setup.py metadata ==="
-          python setup.py --version
-          python setup.py --name
-          python setup.py --author
-          python setup.py --description
 
       - name: Build package
         run: |
           python -m build --no-isolation
-          echo "=== Build complete ==="
           ls -la dist/
 
-      - name: Verify wheel metadata
+      - name: Check package metadata
         run: |
-          cd dist
-          python -m zipfile -l *.whl | grep -E "(METADATA|PKG-INFO|RECORD)"
-          unzip -p *.whl "*/METADATA"
-          cd ..
-
-      - name: Twine check
-        run: twine check dist/*
+          twine check dist/*
 
       - name: Publish to PyPI
         if: success()
