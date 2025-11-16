@@ -1,3 +1,60 @@
 [build-system]
 requires = ["setuptools>=68.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "polymcp"
+version = "0.0.1"
+description = "Universal MCP Agent & Toolkit for intelligent LLM tool orchestration"
+readme = "README.md"
+authors = [
+    {name = "PolyMCP", email = "noreply@example.com"}
+]
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "pydantic>=2.5.0",
+    "requests>=2.31.0",
+    "docstring-parser>=0.15",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.10.0"]
+anthropic = ["anthropic>=0.8.0"]
+all = [
+    "openai>=1.10.0",
+    "anthropic>=0.8.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.12.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "httpx>=0.26.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/llm-use/polymcp"
+Repository = "https://github.com/llm-use/polymcp"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["polymcp*"]
+exclude = ["tests*", "docs*", "examples*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.py", "*.md", "*.txt"]
