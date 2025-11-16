@@ -6,8 +6,8 @@ readme_path = Path(__file__).parent / "README.md"
 long_description = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
 
 setup(
-    name="polymcp",  # Nome pacchetto
-    version="0.0.1",  # Versione fissa
+    name="polymcp",               # QUI il nome
+    version="0.0.1",              # QUI la versione
     author="PolyMCP",
     author_email="noreply@example.com",
     description="Universal MCP Agent & Toolkit for intelligent LLM tool orchestration",
@@ -16,6 +16,7 @@ setup(
     url="https://github.com/llm-use/polymcp",
     packages=find_packages(exclude=["tests", "examples", "docs"]),
     include_package_data=True,
+    zip_safe=False,
     python_requires=">=3.8",
     install_requires=[
         "fastapi>=0.109.0",
