@@ -1,3 +1,9 @@
 include README.md
 include LICENSE
+include pyproject.toml
 recursive-include polymcp *.py
+recursive-include polymcp/polyagent *.py
+recursive-include polymcp/polymcp_toolkit *.py
+exclude test*
+exclude docs*
+exclude examples*
