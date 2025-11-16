@@ -1,7 +1,3 @@
-"""
-PolyMCP - Universal MCP Agent & Toolkit
-"""
-
 from .polyagent.agent import PolyAgent
 from .polyagent.llm_providers import (
     LLMProvider,
@@ -13,6 +9,7 @@ from .polyagent.llm_providers import (
 )
 from .polymcp_toolkit.expose import expose_tools
 
+# Versione interna
 from .version import __version__
 
 __all__ = [
