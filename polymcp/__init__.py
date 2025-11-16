@@ -9,7 +9,6 @@ from .polyagent.llm_providers import (
 )
 from .polymcp_toolkit.expose import expose_tools
 
-# Versione interna
 from .version import __version__
 
 __all__ = [
