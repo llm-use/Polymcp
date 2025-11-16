@@ -16,8 +16,10 @@ if readme_path.exists():
 version_file = Path(__file__).parent / "polymcp" / "version.py"
 version = "0.0.0.dev0"
 if version_file.exists():
+    namespace = {}
     with open(version_file, "r", encoding="utf-8") as f:
-        exec(f.read())
+        exec(f.read(), namespace)
+        version = namespace.get('__version__', version)
 
 setup(
     name="polymcp",
