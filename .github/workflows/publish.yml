@@ -3,7 +3,7 @@ name: Publish Python Package (PolyMCP)
 on:
   push:
     branches:
-      - main
+      - main  # pubblica solo dai commit su main
 
 permissions:
   id-token: write
@@ -25,17 +25,23 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade build wheel setuptools==76.1.0 twine pkginfo
+          pip install --upgrade build wheel setuptools twine pkginfo==1.10.0
 
       - name: Verify package structure
         run: |
           test -f polymcp/__init__.py && echo "__init__.py exists" || echo "__init__.py MISSING!"
           test -f polymcp/version.py && echo "version.py exists" || echo "version.py MISSING!"
 
+      - name: Test setup.py metadata
+        run: |
+          python setup.py --name
+          python setup.py --version
+          python setup.py --author
+          python setup.py --description
+
       - name: Build package
         run: |
-          rm -rf dist build *.egg-info
-          python -m build
+          python -m build --no-isolation
           echo "=== dist/ contents ==="
           ls -la dist/
 
@@ -46,7 +52,8 @@ jobs:
           cd ..
 
       - name: Check package with twine
-        run: twine check dist/*
+        run: |
+          twine check dist/*
 
       - name: Publish to PyPI
         if: success()
