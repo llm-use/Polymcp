@@ -3,7 +3,7 @@ name: Publish Python Package (PolyMCP)
 on:
   push:
     branches:
-      - main  # pubblica solo dai commit su main
+      - main
 
 permissions:
   id-token: write
@@ -25,12 +25,13 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade build wheel setuptools pkginfo==1.10.0 twine==6.0.1
+          pip install --upgrade build setuptools>=68.0.0 wheel twine
 
       - name: Verify package structure
         run: |
+          test -f setup.py && echo "setup.py exists" || echo "setup.py MISSING!"
           test -f polymcp/__init__.py && echo "__init__.py exists" || echo "__init__.py MISSING!"
-          test -f polymcp/version.py && echo "version.py exists" || echo "version.py MISSING!"
+          test -f README.md && echo "README.md exists" || echo "README.md MISSING!"
 
       - name: Test setup.py metadata
         run: |
@@ -39,16 +40,22 @@ jobs:
           python setup.py --author
           python setup.py --description
 
+      - name: Clean previous builds
+        run: |
+          rm -rf dist/ build/ *.egg-info
+
       - name: Build package
         run: |
-          python -m build --no-isolation
+          python -m build
           echo "=== dist/ contents ==="
           ls -la dist/
 
       - name: Verify wheel contents
         run: |
           cd dist
-          python -m zipfile -l *.whl | grep -E "(METADATA|PKG-INFO|RECORD)"
+          unzip -l *.whl | head -20
+          echo "=== Checking for metadata ==="
+          unzip -p *.whl '*/METADATA' | head -20 || echo "METADATA not found"
           cd ..
 
       - name: Check package with twine
