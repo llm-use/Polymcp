@@ -25,7 +25,7 @@ setup(
     name="polymcp",
     version=version,
     author="PolyMCP",
-    author_email="",
+    author_email="noreply@example.com",  # ← CAMBIA QUESTA RIGA!
     description="Universal MCP Agent & Toolkit for intelligent LLM tool orchestration",
     long_description=long_description,
     long_description_content_type="text/markdown",
