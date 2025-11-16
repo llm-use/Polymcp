@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 import os
 
+# Importa la versione
+exec(open('polymcp/version.py').read())
+
 # Legge README.md
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
@@ -8,22 +11,22 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="polymcp",
-    version="0.0.1",
+    version=__version__,
     author="PolyMCP",
     author_email="noreply@example.com",
     description="Universal MCP Agent & Toolkit for intelligent LLM tool orchestration",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/llm-use/polymcp",
-    packages=find_packages(exclude=["tests*", "examples*", "docs*"]),
+    packages=find_packages(),
     package_data={
-        "polymcp": ["*.py"],
+        "": ["*.py", "*.md", "*.txt"],
     },
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.8",
-    license="MIT",  # AGGIUNGI QUESTO
-    classifiers=[   # AGGIUNGI QUESTI
+    license="MIT",
+    classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
