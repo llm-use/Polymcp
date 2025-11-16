@@ -13,11 +13,7 @@ from .polyagent.llm_providers import (
 )
 from .polymcp_toolkit.expose import expose_tools
 
-# Importa la versione da version.py invece di definirla qui
-try:
-    from .version import __version__
-except ImportError:
-    __version__ = "0.0.0.dev0"
+from .version import __version__
 
 __all__ = [
     'PolyAgent',
