@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "polymcp"
-dynamic = ["version"]
+version = "1.0.0"  # 👈 AGGIUNGI la versione statica qui!
 description = "Universal MCP Agent & Toolkit for intelligent LLM tool orchestration"
 readme = "README.md"
 authors = [
@@ -58,6 +58,3 @@ exclude = ["tests*", "docs*", "examples*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.py", "*.md", "*.txt"]
-
-[tool.setuptools.dynamic]
-version = {attr = "polymcp.__version__"} 
