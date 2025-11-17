@@ -1,3 +1,4 @@
+from .version import __version__
 from .polyagent.agent import PolyAgent
 from .polyagent.llm_providers import (
     LLMProvider,
@@ -8,8 +9,6 @@ from .polyagent.llm_providers import (
     DeepSeekProvider
 )
 from .polymcp_toolkit.expose import expose_tools
-
-from .version import __version__
 
 __all__ = [
     'PolyAgent',
