@@ -58,3 +58,6 @@ exclude = ["tests*", "docs*", "examples*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.py", "*.md", "*.txt"]
+
+[tool.setuptools.dynamic]
+version = {attr = "polymcp.__version__"} 
