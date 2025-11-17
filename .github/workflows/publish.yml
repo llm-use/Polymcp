@@ -25,7 +25,26 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade build twine
+          pip install --upgrade build twine toml
+
+      - name: Generate version.py from pyproject.toml
+        run: |
+          python -c "
+          import toml
+          from pathlib import Path
+          
+          # Leggi pyproject.toml
+          config = toml.load('pyproject.toml')
+          version = config['project']['version']
+          
+          # Crea version.py
+          version_file = Path('polymcp/version.py')
+          version_file.write_text(f'__version__ = \"{version}\"\\n')
+          
+          print(f'✓ Generated polymcp/version.py with version {version}')
+          print('Content:')
+          print(version_file.read_text())
+          "
 
       - name: Verify package structure
         run: |
@@ -34,6 +53,7 @@ jobs:
           test -f README.md && echo "✓ README.md" || (echo "✗ MISSING README.md" && exit 1)
           test -d polymcp && echo "✓ polymcp/" || (echo "✗ MISSING polymcp/" && exit 1)
           test -f polymcp/__init__.py && echo "✓ polymcp/__init__.py" || (echo "✗ MISSING polymcp/__init__.py" && exit 1)
+          test -f polymcp/version.py && echo "✓ polymcp/version.py (generated)" || (echo "✗ MISSING polymcp/version.py" && exit 1)
 
       - name: Clean previous builds
         run: |
