@@ -76,7 +76,7 @@ The upgraded `UnifiedPolyAgent` now features:
 - **Mixed server support** - HTTP + stdio in the same agent
 
 ```python
-from polymcp import UnifiedPolyAgent, OllamaProvider
+from polymcp.polyagent import UnifiedPolyAgent, OllamaProvider
 
 agent = UnifiedPolyAgent(
     llm_provider=OllamaProvider(model="gpt-oss:120b-cloud"),
