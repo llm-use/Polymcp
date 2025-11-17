@@ -22,7 +22,7 @@ Generate Python code instead of making multiple tool calls! The new `CodeModeAge
 - **Perfect for complex workflows** with multiple sequential operations
 
 ```python
-from polymcp import CodeModeAgent, OpenAIProvider
+from polymcp.polyagent import CodeModeAgent, PolyAgent, OllamaProvider, OpenAIProvider
 
 agent = CodeModeAgent(
     llm_provider=OpenAIProvider(),
@@ -44,7 +44,7 @@ Choose the best execution mode for your use case:
 
 **HTTP Mode** (Traditional):
 ```python
-from polymcp import expose_tools_http
+from polymcp.polymcp_toolkit import expose_tools_http
 
 app = expose_tools_http(
     tools=[my_function],
@@ -55,7 +55,7 @@ app = expose_tools_http(
 
 **In-Process Mode** (NEW - Zero Overhead):
 ```python
-from polymcp import expose_tools_inprocess
+from polymcp.polymcp_toolkit import expose_tools_inprocess
 
 server = expose_tools_inprocess(tools=[my_function])
 result = await server.invoke("my_function", {"param": "value"})
