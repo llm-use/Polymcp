@@ -73,7 +73,8 @@ Focus on what was accomplished, not how it was done."""
         stdio_servers: Optional[List[Dict[str, Any]]] = None,
         registry_path: Optional[str] = None,
         verbose: bool = False,
-        memory_enabled: bool = True
+        memory_enabled: bool = True,
+        http_headers: Optional[Dict[str, str]] = None  
     ):
         """
         Initialize unified agent.
@@ -91,7 +92,7 @@ Focus on what was accomplished, not how it was done."""
         self.stdio_configs = stdio_servers or []
         self.verbose = verbose
         self.memory_enabled = memory_enabled
-        
+        self.http_headers = http_headers or {}  
         self.http_tools_cache = {}
         self.stdio_clients: Dict[str, MCPStdioClient] = {}
         self.stdio_adapters: Dict[str, MCPStdioAdapter] = {}
@@ -159,7 +160,7 @@ Focus on what was accomplished, not how it was done."""
         for server_url in self.mcp_servers:
             try:
                 list_url = f"{server_url}/list_tools"
-                response = requests.get(list_url, timeout=5)
+                response = requests.get(list_url, timeout=5,headers=self.http_headers)
                 response.raise_for_status()
                 
                 tools = response.json().get('tools', [])
@@ -207,7 +208,12 @@ Focus on what was accomplished, not how it was done."""
         try:
             if server_type == 'http':
                 invoke_url = f"{server_url}/invoke/{tool_name}"
-                response = requests.post(invoke_url, json=parameters, timeout=30)
+                response = requests.post(
+                invoke_url, 
+                json=parameters, 
+                timeout=30,
+                headers=self.http_headers  
+            )
                 response.raise_for_status()
                 return response.json()
             
