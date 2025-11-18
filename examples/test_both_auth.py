@@ -37,7 +37,7 @@ async def test_unified_agent_api_key():
     print("🔑 TEST 1: UnifiedPolyAgent with API Key")
     print("="*60)
     
-    api_key = os.getenv("MCP_API_KEY_POLYMCP", "dev-polymcp-key-789")
+    api_key = os.getenv("MCP_API_KEY_POLYMCP", "dev-polymcp-key")
     print(f"Using API Key: {api_key[:20]}...")
     
     # Test connection first
@@ -378,3 +378,4 @@ if __name__ == "__main__":
         print(f"\n❌ Test failed with error: {e}")
         import traceback
         traceback.print_exc()
+
