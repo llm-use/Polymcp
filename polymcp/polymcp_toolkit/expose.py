@@ -509,3 +509,39 @@ def expose_tools(
     Maintained for backward compatibility.
     """
     return expose_tools_http(tools, title, description, version, verbose=False)
+
+
+def expose_tools_http_with_auth(
+    tools: Union[Callable, List[Callable]],
+    api_keys: Dict[str, str] = None,
+    title: str = "Authenticated MCP Tool Server",
+    description: str = "MCP server with API key authentication",
+    version: str = "1.0.0",
+    verbose: bool = False
+) -> FastAPI:
+    """
+    Expose tools with API key authentication.
+    
+    Args:
+        tools: Functions to expose as MCP tools
+        api_keys: Dictionary of user -> api_key (default: {"default": "test-api-key-123"})
+        title: API title
+        description: API description
+        version: API version
+        verbose: Enable verbose logging
+    
+    Returns:
+        FastAPI app with authentication
+    """
+    # Import here to avoid circular dependency
+    from .mcp_auth_simple import SimpleAuthenticator, add_auth_to_mcp_server
+    
+    # Create base app
+    app = expose_tools_http(tools, title, description, version, verbose)
+    
+    # Add authentication
+    authenticator = SimpleAuthenticator(api_keys)
+    app = add_auth_to_mcp_server(app, authenticator)
+    
+    return app
+
