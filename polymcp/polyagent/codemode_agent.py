@@ -70,8 +70,9 @@ print(f"Result: {{result}}")  # NOTA: doppie parentesi graffe!
         registry_path: Optional[str] = None,
         sandbox_timeout: float = 30.0,
         max_retries: int = 2,
-        verbose: bool = False
-    ):
+        verbose: bool = False,
+        http_headers: Optional[Dict[str, str]] = None  
+        ):
         """
         Initialize Code Mode Agent.
         
@@ -83,6 +84,7 @@ print(f"Result: {{result}}")  # NOTA: doppie parentesi graffe!
             sandbox_timeout: Code execution timeout in seconds
             max_retries: Maximum retries for failed executions
             verbose: Enable verbose logging
+            http_headers: Headers for HTTP requests (e.g., authentication)  
         """
         self.llm_provider = llm_provider
         self.mcp_servers = mcp_servers or []
@@ -90,7 +92,7 @@ print(f"Result: {{result}}")  # NOTA: doppie parentesi graffe!
         self.sandbox_timeout = sandbox_timeout
         self.max_retries = max_retries
         self.verbose = verbose
-        
+        self.http_headers = http_headers or {}  
         # Tool discovery
         self.http_tools_cache: Dict[str, List[Dict]] = {}
         self.stdio_clients: Dict[str, Any] = {}
@@ -129,7 +131,7 @@ print(f"Result: {{result}}")  # NOTA: doppie parentesi graffe!
         for server_url in self.mcp_servers:
             try:
                 list_url = f"{server_url}/list_tools"
-                response = requests.get(list_url, timeout=5)
+                response = requests.get(list_url, timeout=5, headers=self.http_headers)
                 response.raise_for_status()
                 
                 tools = response.json().get('tools', [])
@@ -290,11 +292,12 @@ tools.{tool_name}():
         Returns:
             ToolsAPI instance
         """
+        http_headers = self.http_headers
         def http_executor(server_url: str, tool_name: str, parameters: Dict) -> Dict:
             """Execute HTTP tool."""
             try:
                 invoke_url = f"{server_url}/invoke/{tool_name}"
-                response = requests.post(invoke_url, json=parameters, timeout=30)
+                response = requests.post(invoke_url, json=parameters, timeout=30,headers=http_headers)
                 response.raise_for_status()
                 return response.json()
             except Exception as e:
@@ -478,7 +481,7 @@ tools.{tool_name}():
             
             try:
                 list_url = f"{server_url}/list_tools"
-                response = requests.get(list_url, timeout=5)
+                response = requests.get(list_url, timeout=5, headers=self.http_headers)
                 response.raise_for_status()
                 
                 tools = response.json().get('tools', [])
