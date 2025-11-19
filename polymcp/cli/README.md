@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="cli/polymcp-cli.png" alt="PolymCP-cli Logo" width="500"/>
+  <img src="polymcp-cli.png" alt="PolymCP-cli Logo" width="500"/>
 </p>
 
 Command-line interface for PolyMCP - Universal MCP Agent & Toolkit.
