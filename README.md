@@ -15,6 +15,20 @@
 
 ## 🎉 What's New
 
+### 🎮 **PolyMCP CLI** - Complete Command-Line Interface
+A powerful CLI for managing MCP servers, running agents, and orchestrating tools:
+
+```bash
+# Initialize projects, manage servers, run agents - all from the terminal
+polymcp init my-project
+polymcp server add http://localhost:8000/mcp
+polymcp agent run --query "What's 2+2?"
+```
+
+Features: Project scaffolding, server registry, interactive agents, testing tools, configuration management, and much more.
+
+📖 **[See the complete CLI documentation →](polymcp/cli/README.md)**
+
 ### 🔒 **Production Authentication** - Secure Your MCP Servers
 Built-in support for API Key and JWT authentication:
 
