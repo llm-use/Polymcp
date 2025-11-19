@@ -332,6 +332,24 @@ Manage MCP servers via JSON files for easy configuration.
 pip install polymcp
 ```
 
+### Windows Users - CLI Installation
+
+For Windows users who want to use the PolyMCP CLI, we recommend using `pipx` for a clean, isolated installation:
+
+```bash
+# Install pipx if you don't have it
+pip install pipx
+pipx ensurepath
+
+# Install PolyMCP with CLI
+pipx install polymcp
+
+# Verify the CLI is working
+polymcp --version
+```
+
+> **Note:** Using `pipx` on Windows ensures the CLI and all dependencies work correctly without conflicts.
+
 ### Development Installation
 
 For contributors or advanced users who want to modify the source code:
@@ -353,6 +371,9 @@ pip install -e ".[dev]"
 
 ```bash
 python -c "import polymcp; print(f'PolyMCP version: {polymcp.__version__}')"
+
+# For CLI users
+polymcp --version
 ```
 
 ---
